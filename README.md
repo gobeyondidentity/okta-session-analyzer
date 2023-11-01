@@ -73,6 +73,20 @@ After downloading the CSV file with your Okta event logs, you are ready to use t
 
 The Okta Session Analyzer offers various configuration options to tailor the analysis to your specific needs. Refer to the `python okta_session_analyzer.py --help` command for detailed information on setting analysis thresholds and customizing alert conditions.
 
+## Example Output
+
+The program will print the id of any risky sessions or individual events.
+
+```
+python3 okta_session_analyzer.py ~/Downloads/syslog_query.csv
+Session ID: 102nHkMDaxYQoSItefBBK3v9g has indicators of high frequency MFA push requests, there were 4 push requests with 3 denials
+Session ID: 102miLvqdoNR4y-4qgTOra9Fg has indicators of high frequency MFA push requests, there were 16 push requests with 15 denials
+Session ID: 102ej5bUZ0rZ6Wnr3B-3p-42w has multiple user agents: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36, Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1
+Session ID: 102ej5bUZ0rZ6Wnr3B-3p-42w has multiple IP addresses: 38.140.114.162, 98.116.139.99
+Session ID: 102bDLRVMytnw2EUPvDwYg6oA Fast travel detected between events 20a6f947-663a-11ee-a07d-db746d32f4e2 and 39d28697-66eb-11ee-b476-011fba50955a: Distance: 2046.96 km Speed: 237.98 km/h
+Session ID: 102dEB6m5ItQPKEaPHHO0Oilw Fast travel detected between events 3db79a8d-603a-11ee-96af-b3cd3e15c958 and 4eeef121-60c5-11ee-96af-b3cd3e15c958: Distance: 3867.28 km Speed: 1469.05 km/h
+```
+
 ## Support
 
 For any issues or questions regarding the use of the Okta Session Analyzer, please open an issue on the repository or contact our support team at `support@beyondidentity.com`.
