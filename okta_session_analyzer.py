@@ -93,6 +93,8 @@ def detect_high_frequency_event(session_id, log_lines, event_type, frequency_thr
 def analyze_user_sessions(csv_file_path, fast_travel_threshold, push_notification_threshold, unauthorized_acccess_attempts_threshold):
     sessions = bucket_sessions(csv_file_path)
 
+    suspicious_session_count = 0
+
     # Iterate through each session in the sessions dictionary
     for session_id, log_lines in sessions.items():
 
@@ -120,6 +122,11 @@ def analyze_user_sessions(csv_file_path, fast_travel_threshold, push_notificatio
         if len(high_frequency_unauthorized_access) > 0:
             attempt_count = high_frequency_unauthorized_access[0][1]
             print(f'Session ID: {session_id} has indicators of high frequency unauthorized application access attempts: {attempt_count}')
+
+        if len(high_frequency_unauthorized_access) or len(push_fatigue_instances) or len(fast_travel_instances) or (len(user_agents) > 1 and len(ip_addresses) > 1):
+            suspicious_session_count += 1
+    
+    print(f'Analyzer completed event scan and found {suspicious_session_count} suspicious sessions')
 
 def analyze_idp_config_changes(df):
     # Define the event types to filter
@@ -164,8 +171,9 @@ def main():
     push_notification_threshold = args.pt
     unauthorized_acccess_attempts_threshold = args.aat
 
-    analyze_user_sessions(csv_file_path, fast_travel_threshold, push_notification_threshold, unauthorized_acccess_attempts_threshold)
     analyze_okta_config_changes(csv_file_path)
+    analyze_user_sessions(csv_file_path, fast_travel_threshold, push_notification_threshold, unauthorized_acccess_attempts_threshold)
+    
     
 
 if __name__ == '__main__':
